@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,15 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n#@y*%v5g1p53=fi-2_g)yw#ti+%5j5(m#=_ua$9-rk*m78#5j'
-
+# SECRET_KEY = 'django-insecure-n#@y*%v5g1p53=fi-2_g)yw#ti+%5j5(m#=_ua$9-rk*m78#5j'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = (os.environ.get('DEBUG_VALUE') == 'True')
 
 ALLOWED_HOSTS = []
 
-STRIPE_SECRET_KEY = 'sk_test_51L3IEXGA7goTPkXeUfAWFoIjQ278h8eDRv3GFc2NNfTk86X2VQqE8COzMdvDXptAL1B17SzUZdGZQneRach4ELC300x7kIyrjh'
-
+# STRIPE_SECRET_KEY = 'sk_test_51L3IEXGA7goTPkXeUfAWFoIjQ278h8eDRv3GFc2NNfTk86X2VQqE8COzMdvDXptAL1B17SzUZdGZQneRach4ELC300x7kIyrjh'
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 # Application definition
 
 INSTALLED_APPS = [
@@ -144,3 +147,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+django_heroku.settings(locals())
